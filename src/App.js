@@ -2,6 +2,7 @@ import { useReducer } from "react";
 import "./App.css";
 import DigitButton from "./DigitButton";
 import OperationButton from "./OperationButton";
+import { HighlightButton } from "./styles";
 
 // States
 export const ACTIONS = {
@@ -155,14 +156,14 @@ function App() {
         </div>
         <div className="current-operand">{formatOperand(currentOperand)}</div>
       </div>
-      <button
+      <HighlightButton
         className="span-two"
         onClick={() => dispatch({ type: ACTIONS.CLEAR })}>
         AC
-      </button>
-      <button onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>
+      </HighlightButton>
+      <HighlightButton onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>
         DEL
-      </button>
+      </HighlightButton>
       <OperationButton operation={"/"} dispatch={dispatch} />
       <DigitButton digit={"1"} dispatch={dispatch} />
       <DigitButton digit={"2"} dispatch={dispatch} />
@@ -178,11 +179,11 @@ function App() {
       <OperationButton operation={"-"} dispatch={dispatch} />
       <DigitButton digit={"."} dispatch={dispatch} />
       <DigitButton digit={"0"} dispatch={dispatch} />
-      <button
+      <HighlightButton
         className="span-two"
         onClick={() => dispatch({ type: ACTIONS.EVALUATE })}>
         =
-      </button>
+      </HighlightButton>
     </div>
   );
 }
