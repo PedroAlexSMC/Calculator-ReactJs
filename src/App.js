@@ -22,7 +22,6 @@ import reducer from './reducers/reducers'
 import { ACTIONS } from "./reducers/actions";
 
 
-
 //Formatter (ignoring decimals)
 const INTEGER_FORMATTER = new Intl.NumberFormat("en-us", {
   maximumFractionDigits: 0,
