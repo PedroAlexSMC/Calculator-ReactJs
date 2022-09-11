@@ -7,7 +7,7 @@ export default function OperationButton({ dispatch, operation }) {
       onClick={() =>
         dispatch({ type: ACTIONS.CHOSE_OPERATION, payload: { operation } })
       }>
-      {operation}
+      {operation === "*" ? "x" : operation}
     </DefaultButton>
   );
 }

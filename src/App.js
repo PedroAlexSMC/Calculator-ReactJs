@@ -2,7 +2,17 @@ import { useReducer } from "react";
 import "./App.css";
 import DigitButton from "./DigitButton";
 import OperationButton from "./OperationButton";
-import { HighlightButton } from "./styles";
+import { GlobalStyles } from "./GlobalStyle";
+import {
+  HighlightButton,
+  EvaluatetButton,
+  Background,
+  Output,
+  DigitsContainer,
+  CalculatorGrid,
+  DelButton,
+} from "./styles";
+import Toggler from "./components/Toggler";
 
 // States
 export const ACTIONS = {
@@ -37,7 +47,6 @@ function reducer(state, { type, payload }) {
         ...state,
         currentOperand: `${state.currentOperand || ""}${payload.digit}`,
       };
-      break;
     case ACTIONS.CHOSE_OPERATION:
       if (state.currentOperand == null && state.previousOperand == null) {
         return state;
@@ -88,7 +97,7 @@ function reducer(state, { type, payload }) {
         };
       }
       if (state.currentOperand == null) return state;
-      if (state.currentOperand.length == 1) {
+      if (state.currentOperand.length === 1) {
         return {
           ...state,
           currentOperand: null,
@@ -124,6 +133,8 @@ function evaluate({ currentOperand, previousOperand, operation }) {
     case "*":
       computation = prev * current;
       break;
+    default:
+      break;
   }
   return computation.toString();
 }
@@ -149,42 +160,52 @@ function App() {
   );
 
   return (
-    <div className="calculator-grid">
-      <div className="output">
-        <div className="previous-operand">
-          {formatOperand(previousOperand)} {operation}
-        </div>
-        <div className="current-operand">{formatOperand(currentOperand)}</div>
-      </div>
-      <HighlightButton
-        className="span-two"
-        onClick={() => dispatch({ type: ACTIONS.CLEAR })}>
-        AC
-      </HighlightButton>
-      <HighlightButton onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>
-        DEL
-      </HighlightButton>
-      <OperationButton operation={"/"} dispatch={dispatch} />
-      <DigitButton digit={"1"} dispatch={dispatch} />
-      <DigitButton digit={"2"} dispatch={dispatch} />
-      <DigitButton digit={"3"} dispatch={dispatch} />
-      <OperationButton operation={"*"} dispatch={dispatch} />
-      <DigitButton digit={"4"} dispatch={dispatch} />
-      <DigitButton digit={"5"} dispatch={dispatch} />
-      <DigitButton digit={"6"} dispatch={dispatch} />
-      <OperationButton operation={"+"} dispatch={dispatch} />
-      <DigitButton digit={"7"} dispatch={dispatch} />
-      <DigitButton digit={"8"} dispatch={dispatch} />
-      <DigitButton digit={"9"} dispatch={dispatch} />
-      <OperationButton operation={"-"} dispatch={dispatch} />
-      <DigitButton digit={"."} dispatch={dispatch} />
-      <DigitButton digit={"0"} dispatch={dispatch} />
-      <HighlightButton
-        className="span-two"
-        onClick={() => dispatch({ type: ACTIONS.EVALUATE })}>
-        =
-      </HighlightButton>
-    </div>
+    <>
+      <GlobalStyles></GlobalStyles>
+      <Background>
+        <CalculatorGrid>
+          <Toggler></Toggler>
+          <Output>
+            <div className="previous-operand">
+              {formatOperand(previousOperand)} {operation}
+            </div>
+            <div className="current-operand">
+              {formatOperand(currentOperand)}
+            </div>
+          </Output>
+          <DigitsContainer>
+            <DigitButton digit={"7"} dispatch={dispatch} />
+            <DigitButton digit={"8"} dispatch={dispatch} />
+            <DigitButton digit={"9"} dispatch={dispatch} />
+            <DelButton onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>
+              DEL
+            </DelButton>
+            <DigitButton digit={"4"} dispatch={dispatch} />
+            <DigitButton digit={"5"} dispatch={dispatch} />
+            <DigitButton digit={"6"} dispatch={dispatch} />
+            <OperationButton operation={"+"} dispatch={dispatch} />
+            <DigitButton digit={"1"} dispatch={dispatch} />
+            <DigitButton digit={"2"} dispatch={dispatch} />
+            <DigitButton digit={"3"} dispatch={dispatch} />
+            <OperationButton operation={"-"} dispatch={dispatch} />
+            <DigitButton digit={"."} dispatch={dispatch} />
+            <DigitButton digit={"0"} dispatch={dispatch} />
+            <OperationButton operation={"/"} dispatch={dispatch} />
+            <OperationButton operation={"*"} dispatch={dispatch} />
+            <HighlightButton
+              className="span-two"
+              onClick={() => dispatch({ type: ACTIONS.CLEAR })}>
+              AC
+            </HighlightButton>
+            <EvaluatetButton
+              className="span-two"
+              onClick={() => dispatch({ type: ACTIONS.EVALUATE })}>
+              =
+            </EvaluatetButton>
+          </DigitsContainer>
+        </CalculatorGrid>
+      </Background>
+    </>
   );
 }
 
