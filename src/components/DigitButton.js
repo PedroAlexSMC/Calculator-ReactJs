@@ -1,5 +1,5 @@
-import { ACTIONS } from "./App";
-import { DefaultButton } from "./styles";
+import { DefaultButton } from "../styles/styles";
+import { ACTIONS } from "../reducers/actions";
 
 export default function DigitButton({ dispatch, digit }) {
   return (
